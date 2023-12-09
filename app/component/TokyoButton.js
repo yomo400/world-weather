@@ -1,4 +1,4 @@
-import Tokyo from "./Tokyo";
+import Tokyo from "./WorldStatus";
 
 export default function TokyoButton() {
   return (

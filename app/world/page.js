@@ -1,11 +1,16 @@
-import Tokyo from "../component/Tokyo";
+import WorldStatus from "../component/WorldStatus";
 import TokyoButton from "../component/TokyoButton";
+import axios from "axios";
+import useSWR from "swr";
+
 
 export default function Home() {
+  //理想　WorldStatus←←page←←SWR←←api Route(コール,id隠される)
+  //現段階　WorldStatus←←SWR(コール,idバレる)
+
   return (
     <>
-      <div>Hello World!</div>
-      <Tokyo />
+      <WorldStatus />
     </>
   );
 }
