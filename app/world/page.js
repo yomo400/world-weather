@@ -1,8 +1,4 @@
-import WorldStatus from "../component/WorldStatus";
-import TokyoButton from "../component/TokyoButton";
-import axios from "axios";
-import useSWR from "swr";
-
+import WorldWeather from "../component/WorldWeather";
 
 export default function Home() {
   //理想　WorldStatus←←page←←SWR←←api Route(コール,id隠される)
@@ -10,7 +6,7 @@ export default function Home() {
 
   return (
     <>
-      <WorldStatus />
+      <WorldWeather />
     </>
   );
 }
