@@ -14,8 +14,8 @@ export default function Home() {
 
   return (
     <>
-      {cityList.map((city) => (
-      <WorldWeather location={city} />
+      {cityList.map((city, index) => (
+      <WorldWeather key={index} location={city} />
       ))}
     </>
   );
