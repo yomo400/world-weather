@@ -1,13 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function LocationInfo(props) {
+  const router = useRouter();
   console.log(props);
-  const winfo = props.info
-  const wiconInfo = winfo?.weather[0].icon
-  const wicon = `https://openweathermap.org/img/wn/${wiconInfo}@2x.png`
-  
+  const winfo = props.info;
+  const wiconInfo = winfo?.weather[0].icon;
+  const wicon = `https://openweathermap.org/img/wn/${wiconInfo}@2x.png`;
+
   return (
     <>
       <div className="flex-none w-32 mb-10 relative z-10">
@@ -16,7 +19,8 @@ export default function LocationInfo(props) {
           width={300}
           height={300}
           alt="天気画像"
-          className="absolute z-10 inset-0 w-full object-contain rounded-lg drop-shadow-lg" />
+          className="absolute z-10 inset-0 w-full object-contain rounded-lg drop-shadow-lg"
+        />
       </div>
       <div className="flex-auto pl-6">
         <div className="relative flex flex-wrap items-baseline">
@@ -42,19 +46,22 @@ export default function LocationInfo(props) {
           <h3 className="relative w-full flex-none mb-2 text-xl">
             <span>風速</span>
             <span className="ml-4 text-2xl">
-              {Math.round(winfo?.wind.speed*10)/10}
+              {Math.round(winfo?.wind.speed * 10) / 10}
             </span>
             <span>m</span>
           </h3>
         </div>
         <div className="flex space-x-2 mb-2 text-sm font-medium">
           <div className="flex space-x-4">
-            <button className="px-6 h-12 uppercase font-semibold tracking-wider border-2 border-black bg-teal-400 text-slate-800" type="submit">
+            <Link
+              className="px-6 leading-[3] uppercase font-semibold tracking-wider border-2 border-black bg-blue-400 text-white rounded"
+              href="/"
+            >
               DETAIL
-            </button>
+            </Link>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
