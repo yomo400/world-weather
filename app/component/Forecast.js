@@ -14,16 +14,19 @@ export default function Forecast(props) {
     fetcher
   );
 
-  console.log(data);
   const finfo = data?.data;
+  const timezone = finfo?.city.timezone
   const deUnix = (e) => {
     let dateTime = new Date(e * 1000);
-    return dateTime.toString();
+    let date = dateTime.toLocaleDateString("ja-JP").slice(5);
+    let time = dateTime.toLocaleTimeString("en-GB").slice(0,5);
+    return [date, time];
   };
-
+  
   return (
     <>
       <div>
+      {timezone}
         <h2>
           {finfo?.city.name}
           <span>{finfo?.city.country}</span>
@@ -37,7 +40,9 @@ export default function Forecast(props) {
           <dd>{finfo?.city.population}</dd>
           <dt>日の出/日没</dt>
           <dd>
-            {deUnix(finfo?.city.sunrise)}/{finfo?.city.sunset}
+            {deUnix(finfo?.city.sunrise)[0]} / {deUnix(finfo?.city.sunrise)[1]}
+            <br />
+            {finfo?.city.sunset}
           </dd>
         </dl>
       </div>
