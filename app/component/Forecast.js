@@ -10,7 +10,7 @@ export default function Forecast(props) {
   // fetch
   const fetcher = (url) => axios.get(url).catch((res) => res.json());
   const { data, error, isLoading } = useSWR(
-    `http://api.openweathermap.org/data/2.5/forecast?appid=81265787ad6274ec35fd3d76001294e9&units=metric&q=${cname}&lang=ja`,
+    `https://api.openweathermap.org/data/2.5/forecast?appid=81265787ad6274ec35fd3d76001294e9&units=metric&q=${cname}&lang=ja`,
     fetcher
   );
 
