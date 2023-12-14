@@ -5,8 +5,8 @@ export default function Home() {
   //現段階　WorldStatus←←SWR(コール,idバレる)
 
   return (
-    <>
+    <div className="bg-teal-50">
       <WorldWeather />
-    </>
+    </div>
   );
 }
