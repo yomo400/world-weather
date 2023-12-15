@@ -2,10 +2,11 @@
 import axios from "axios";
 import React, { useState } from "react";
 import useSWR from "swr";
+import TimeSet from "./TimeSet";
+import WeatherForecast from "./WeatherForecast";
 
 export default function Forecast(props) {
   const cname = props.cname;
-  console.log(cname);
 
   // fetch
   const fetcher = (url) => axios.get(url).catch((res) => res.json());
@@ -13,39 +14,81 @@ export default function Forecast(props) {
     `https://api.openweathermap.org/data/2.5/forecast?appid=81265787ad6274ec35fd3d76001294e9&units=metric&q=${cname}&lang=ja`,
     fetcher
   );
-
   const finfo = data?.data;
-  const timezone = finfo?.city.timezone
-  const deUnix = (e) => {
-    let dateTime = new Date(e * 1000);
-    let date = dateTime.toLocaleDateString("ja-JP").slice(5);
-    let time = dateTime.toLocaleTimeString("en-GB").slice(0,5);
-    return [date, time];
+  const wfinfo = data?.data.list;
+
+  // 時刻
+  const now = Date.now();
+  const unixTime = data && [
+    now / 1000,
+    finfo?.list[0].dt,
+    finfo?.list[8].dt,
+    finfo?.list[16].dt,
+    finfo?.list[24].dt,
+    finfo?.list[32].dt,
+    finfo?.city.timezone,
+  ];
+  const localTime = TimeSet(unixTime);
+
+  // 国コード
+  const ccode = finfo?.city.country;
+  const changeCode = (e) => {
+    if (e) {
+      let countryName;
+      e === "JP"
+        ? (countryName = "日本")
+        : e === "GB"
+        ? (countryName = "イギリス")
+        : e === "US"
+        ? (countryName = "アメリカ")
+        : e === "RU"
+        ? (countryName = "ロシア")
+        : e === "AU"
+        ? (countryName = "オーストラリア")
+        : (countryName = "エラーが発生しています");
+      return countryName;
+    }
   };
-  
+
   return (
     <>
-      <div>
-      {timezone}
-        <h2>
+      <div className="px-4 py-2">
+        <h3 className="text-4xl font-bold leading-7 text-blue-600 flex items-end">
           {finfo?.city.name}
-          <span>{finfo?.city.country}</span>
-        </h2>
-        <dl>
-          <dt>緯度/経度</dt>
-          <dd>
-            {finfo?.city.coord.lat}/{finfo?.city.coord.lon}
-          </dd>
-          <dt>人口</dt>
-          <dd>{finfo?.city.population}</dd>
-          <dt>日の出/日没</dt>
-          <dd>
-            {deUnix(finfo?.city.sunrise)[0]} / {deUnix(finfo?.city.sunrise)[1]}
-            <br />
-            {finfo?.city.sunset}
-          </dd>
+          <p className="mt-1 max-w-2xl text-lg leading-6 text-sky-400 ml-5">
+            {changeCode(ccode)}
+          </p>
+        </h3>
+      </div>
+      <div className="mt-6 border-t border-gray-100">
+        <dl className="divide-y divide-gray-100">
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4">
+            <dt className="text-base font-medium leading-6 text-gray-900">
+              現地時刻
+            </dt>
+            <dd className="mt-1 text-base leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {data ? localTime[0].time : ""}
+            </dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4">
+            <dt className="text-base font-medium leading-6 text-gray-900">
+              緯度
+            </dt>
+            <dd className="mt-1 text-base leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {finfo?.city.coord.lat}
+            </dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4">
+            <dt className="text-base font-medium leading-6 text-gray-900">
+              経度
+            </dt>
+            <dd className="mt-1 text-base leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {finfo?.city.coord.lon}
+            </dd>
+          </div>
         </dl>
       </div>
+      <WeatherForecast wfinfo={wfinfo} localTime={localTime} />
     </>
   );
 }

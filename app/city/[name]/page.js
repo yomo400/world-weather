@@ -6,9 +6,16 @@ export default function Page({ params }) {
   const cname = decodeURI(params.name);
 
   return (
-    <>
-      <Link href="/world">WORLD</Link>
+    <div>
       <Forecast cname={cname} />
-    </>
+      <div className="m-1">
+        <Link
+          href="/world"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-3 rounded"
+        >
+          WORLDへ戻る
+        </Link>
+      </div>
+    </div>
   );
 }
