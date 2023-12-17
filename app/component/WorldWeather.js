@@ -20,13 +20,13 @@ export default function WorldWeather(props) {
 
   // fetch
   const [isFetch, setIsFetch] = useState(false);
-  const fetcher = (url) => axios.get(url).catch((res) => res.json());
-  const { data, error, isLoading } = useSWR(
-    isFetch
-      ? `https://api.openweathermap.org/data/2.5/weather?appid=81265787ad6274ec35fd3d76001294e9&q=${city}&units=metric&lang=ja`
-      : null,
-    fetcher
-  );
+  const fetcherApi = (url) => axios.get(url).catch((res) => res.json());
+  const {
+    data: weather,
+    error,
+    isLoading,
+  } = useSWR(isFetch ? `/api/${city}/weather` : null, fetcherApi);
+  console.log(weather);
 
   return (
     <>
@@ -43,12 +43,12 @@ export default function WorldWeather(props) {
         </button>
       ))}
       <div className="max-w-md rounded-lg flex m-3 p-4 border-double border-4 border-indigo-600 justify-center">
-        {data ? (
-          <LocationInfo info={data?.data} />
+        {error ? (
+          messageError
         ) : isLoading ? (
           messageLoading
-        ) : error ? (
-          messageError
+        ) : weather ? (
+          <LocationInfo info={weather?.data.res} />
         ) : (
           messageFirst
         )}

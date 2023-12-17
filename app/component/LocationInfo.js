@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function LocationInfo(props) {
-  console.log(props);
+  // console.log(props);
   const winfo = props.info;
   const wiconInfo = winfo?.weather[0].icon;
   const wicon = `https://openweathermap.org/img/wn/${wiconInfo}@2x.png`;
@@ -53,7 +53,7 @@ export default function LocationInfo(props) {
           <div className="flex space-x-4">
             <Link
               className="px-6 leading-[3] uppercase font-semibold tracking-wider border-2 border-slate-600 bg-blue-400 text-white rounded"
-              href={`/city/${encodeURIComponent(winfo.name)}`}
+              href={`/city/${encodeURIComponent(winfo?.name)}`}
             >
               DETAIL
             </Link>

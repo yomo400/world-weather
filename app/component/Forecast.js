@@ -1,6 +1,5 @@
 "use client";
 import axios from "axios";
-import React, { useState } from "react";
 import useSWR from "swr";
 import TimeSet from "./TimeSet";
 import WeatherForecast from "./WeatherForecast";
@@ -10,15 +9,17 @@ export default function Forecast(props) {
 
   // fetch
   const fetcher = (url) => axios.get(url).catch((res) => res.json());
-  const { data, error, isLoading } = useSWR(
-    `https://api.openweathermap.org/data/2.5/forecast?appid=81265787ad6274ec35fd3d76001294e9&units=metric&q=${cname}&lang=ja`,
-    fetcher
-  );
-  const finfo = data?.data;
-  
+  const {
+    data: forecast,
+    error,
+    isLoading,
+  } = useSWR(`/api/${cname}/forecast`, fetcher);
+  console.log(forecast);
+  const finfo = forecast?.data.res;
+
   // 時刻(TimeSet.jsで変換)
   const now = Date.now();
-  const unixTime = data && [
+  const unixTime = forecast && [
     now / 1000,
     finfo?.list[0].dt,
     finfo?.list[8].dt,
@@ -28,34 +29,34 @@ export default function Forecast(props) {
     finfo?.city.timezone,
   ];
   const localTime = TimeSet(unixTime);
-  
+
   // 国コード
   const ccode = finfo?.city.country;
   const changeCode = (e) => {
     if (e) {
       let countryName;
       e === "JP"
-      ? (countryName = "日本")
-      : e === "GB"
-      ? (countryName = "イギリス")
-      : e === "US"
-      ? (countryName = "アメリカ")
-      : e === "RU"
-      ? (countryName = "ロシア")
-      : e === "AU"
-      ? (countryName = "オーストラリア")
-      : (countryName = "エラーが発生しています");
+        ? (countryName = "日本")
+        : e === "GB"
+        ? (countryName = "イギリス")
+        : e === "US"
+        ? (countryName = "アメリカ")
+        : e === "RU"
+        ? (countryName = "ロシア")
+        : e === "AU"
+        ? (countryName = "オーストラリア")
+        : (countryName = "エラーが発生しています");
       return countryName;
     }
   };
-  
+
   // 予報抽出
-  const wfinfo = data?.data.list;
-  const flist = []
+  const wfinfo = finfo?.list;
+  const flist = [];
   if (wfinfo) {
-    for (let index = 0; index < wfinfo.length;) {
-      flist.push(wfinfo[index])
-      index = index + 8
+    for (let index = 0; index < wfinfo.length; ) {
+      flist.push(wfinfo[index]);
+      index = index + 8;
     }
   }
 
@@ -80,7 +81,7 @@ export default function Forecast(props) {
                   現地時刻
                 </dt>
                 <dd className="mt-1 text-base leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {data ? localTime[0].time : ""}
+                  {forecast ? localTime[0].time : ""}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4">
@@ -112,6 +113,7 @@ export default function Forecast(props) {
           />
         ))}
       </ul>
+      <p>※時間はすべて現地時間です。</p>
     </>
   );
 }
