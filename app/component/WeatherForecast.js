@@ -23,14 +23,14 @@ export default function WeatherForecast(props) {
           {Math.round(flist?.main.temp_max)}
           <span className="text-3xl">&#8451;</span>
         </span>
-        <span className="text-2xl mx-3 text-slate-600">/</span>
+        <span className="text-2xl mx-1.5 text-slate-600">/</span>
         <span className="text-4xl text-sky-500">
           {Math.round(flist?.main.temp_min)}
           <span className="text-3xl">&#8451;</span>
         </span>
       </h3>
-      <h4>降水確率{flist?.pop * 100}%</h4>
-      <h4>湿度{flist?.main.humidity}%</h4>
+      <h4>降水確率{Math.round(flist?.pop * 100)}%</h4>
+      <h4>湿度{Math.round(flist?.main.humidity)}%</h4>
       <h4>風速{Math.round(flist?.wind.speed * 10) / 10}m/s</h4>
     </li>
   );

@@ -81,7 +81,7 @@ export default function Forecast(props) {
                   現地時刻
                 </dt>
                 <dd className="mt-1 text-base leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {forecast ? localTime[0].time : ""}
+                  {forecast && localTime[0].time}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4">
@@ -89,7 +89,7 @@ export default function Forecast(props) {
                   緯度
                 </dt>
                 <dd className="mt-1 text-base leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {finfo?.city.coord.lat}
+                  {Math.round(finfo?.city.coord.lat * 10) / 10}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4">
@@ -97,7 +97,7 @@ export default function Forecast(props) {
                   経度
                 </dt>
                 <dd className="mt-1 text-base leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {finfo?.city.coord.lon}
+                  {Math.round(finfo?.city.coord.lon * 10) / 10}
                 </dd>
               </div>
             </dl>

@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import useSWR from "swr";
 import LocationInfo from "./LocationInfo";
+import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 
 export default function WorldWeather(props) {
   // 都市
@@ -28,8 +29,57 @@ export default function WorldWeather(props) {
   } = useSWR(isFetch ? `/api/${city}/weather` : null, fetcherApi);
   console.log(weather);
 
+  // Google Map
+  const containerStyle = {
+    width: "100vw",
+    maxWidth: "1080px",
+    height: "550px",
+  };
+
+  const center = {
+    lat: 35.6895,
+    lng: 139.6917,
+  };
+
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_KEY,
+  });
+
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map) {
+    // This is just an example of getting and using the map instance!!! don't just blindly copy!
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null);
+  }, []);
+
   return (
     <>
+      {isLoaded ? (
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={2}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+        >
+          <MarkerF
+            position={center}
+            // icon={
+            //   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+            // }
+          />
+        </GoogleMap>
+      ) : (
+        messageLoading
+      )}
       {cityList.map((city, index) => (
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded"
