@@ -65,55 +65,115 @@ export default function Forecast(props) {
       {isLoading ? (
         <div className="animate-spin h-10 w-10 border-4 border-blue-500 rounded-full border-t-transparent my-20"></div>
       ) : (
-        <div>
-          <div className="px-4 py-2">
-            <h3 className="text-4xl font-bold leading-7 text-blue-600 flex items-end">
-              {finfo?.city.name}
-              <p className="mt-1 max-w-2xl text-lg leading-6 text-sky-400 ml-5">
-                {changeCode(ccode)}
-              </p>
-            </h3>
-          </div>
-          <div className="mt-6 border-t border-gray-100">
-            <dl className="divide-y divide-gray-100">
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4">
-                <dt className="text-base font-medium leading-6 text-gray-900">
-                  現地時刻
-                </dt>
-                <dd className="mt-1 text-base leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {forecast && localTime[0].time}
-                </dd>
+        <div className="relative min-h-screen bg-gray-100 dark:bg-gray-800">
+          <div className="flex items-start justify-between">
+            <div className="flex flex-col w-full pl-0 md:p-4 md:space-y-4">
+              <header className="z-40 items-center w-full h-16 bg-white shadow-lg dark:bg-gray-700 md:rounded-2xl rounded-b-2xl sticky top-0">
+                <div className="relative z-20 flex flex-col justify-center h-full px-3 mx-auto flex-center">
+                  <div className="relative flex items-center w-full pl-1 lg:max-w-68 sm:pr-2 sm:ml-0">
+                    <div className="container relative left-0 z-50 flex w-3/4 h-auto h-full">
+                      <div className="relative flex items-center w-full h-full lg:w-64 group">
+                        {finfo?.city.name}
+                      </div>
+                    </div>
+                    <div className="relative flex items-center justify-end w-1/4 p-1 ml-5 mr-4 sm:mr-0 sm:right-auto">
+                      {changeCode(ccode)}
+                    </div>
+                  </div>
+                </div>
+              </header>
+              <div className="flex flex-col flex-wrap sm:flex-row mt-4">
+                <div className="w-full sm:w-1/2 xl:w-1/3">
+                  <div className="mx-2 mb-4 sm:ml-4 xl:mr-4">
+                    <div className="w-full p-4 bg-white shadow-lg rounded-2xl dark:bg-gray-700">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center">
+                          <div className="flex flex-col">
+                            <span className="ml-2 font-bold text-black text-md dark:text-white">
+                              現地時刻
+                            </span>
+                            <span className="ml-2 text-sm text-gray-500 dark:text-white">
+                              {forecast && localTime[0].time}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full sm:w-1/2 xl:w-1/3">
+                  <div className="mx-2 mb-4 sm:ml-4 xl:mr-4">
+                    <div className="w-full p-4 bg-white shadow-lg rounded-2xl dark:bg-gray-700">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center">
+                          <div className="flex flex-col">
+                            <span className="ml-2 font-bold text-black text-md dark:text-white">
+                              地図
+                            </span>
+                            <span className="ml-2 text-sm text-gray-500 dark:text-white"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full sm:w-1/2 xl:w-1/3">
+                  <div className="mx-2 mb-4 sm:ml-4 xl:mr-4">
+                    <div className="w-full bg-white shadow-lg rounded-2xl dark:bg-gray-700">
+                      <p className="p-4 font-bold text-black text-md dark:text-white">
+                        My Tasks
+                        <span className="ml-2 text-sm text-gray-500 dark:text-gray-300 dark:text-white">
+                          (05)
+                        </span>
+                      </p>
+                      <ul>
+                        <li className="flex items-center justify-between py-3 text-gray-600 border-b-2 border-gray-100 dark:text-gray-200 dark:border-gray-800">
+                          <div className="flex items-center justify-start text-sm">
+                            <span className="mx-4"> 緯度 </span>
+                            <span>
+                              {Math.round(finfo?.city.coord.lat * 10) / 10}
+                            </span>
+                          </div>
+                        </li>
+                        <li className="flex items-center justify-between py-3 text-gray-600 border-gray-100 dark:text-gray-200 dark:border-gray-800">
+                          <div className="flex items-center justify-start text-sm">
+                            <span className="mx-4"> 経度 </span>
+                            <span>
+                              {Math.round(finfo?.city.coord.lon * 10) / 10}
+                            </span>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full">
+                  <div className="mx-2 mb-4 sm:ml-4 xl:mr-4">
+                    <div className="w-full bg-white shadow-lg rounded-2xl dark:bg-gray-700">
+                      <p className="p-4 font-bold text-black text-md dark:text-white">
+                        My Tasks
+                        <span className="ml-2 text-sm text-gray-500 dark:text-gray-300 dark:text-white">
+                          (05)
+                        </span>
+                      </p>
+                      <ul className="flex flex-col sm:flex-row">
+                        {flist.map((list, index) => (
+                          <WeatherForecast
+                            key={index}
+                            flist={flist[index]}
+                            localTime={localTime && localTime[index + 1]}
+                          />
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <p>※時間はすべて現地時間です。</p>
               </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4">
-                <dt className="text-base font-medium leading-6 text-gray-900">
-                  緯度
-                </dt>
-                <dd className="mt-1 text-base leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {Math.round(finfo?.city.coord.lat * 10) / 10}
-                </dd>
-              </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4">
-                <dt className="text-base font-medium leading-6 text-gray-900">
-                  経度
-                </dt>
-                <dd className="mt-1 text-base leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {Math.round(finfo?.city.coord.lon * 10) / 10}
-                </dd>
-              </div>
-            </dl>
+            </div>
           </div>
         </div>
       )}
-      <ul className="flex gap-x-8">
-        {flist.map((list, index) => (
-          <WeatherForecast
-            key={index}
-            flist={flist[index]}
-            localTime={localTime && localTime[index + 1]}
-          />
-        ))}
-      </ul>
-      <p>※時間はすべて現地時間です。</p>
     </>
   );
 }
