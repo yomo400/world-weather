@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import useSWR from "swr";
 import LocationInfo from "./LocationInfo";
 import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
+import googleMapReact from "google-map-react";
 
 export default function WorldWeather(props) {
   // 都市
@@ -27,47 +28,57 @@ export default function WorldWeather(props) {
     error,
     isLoading,
   } = useSWR(isFetch ? `/api/${city}/weather` : null, fetcherApi);
-  console.log(weather);
+  // console.log(weather);
 
-  // Google Map
-  const containerStyle = {
-    width: "100vw",
-    maxWidth: "1080px",
-    height: "550px",
-  };
+  // Google Map "google-map-react"
+  // const defaultMap = {
+  //   center: {
+  //     lat: 35.6895,
+  //     lng: 139.6917,
+  //   },
+  //   zoom: 11,
+  // };
+  // Google Map "@react-google-maps/api"
+  // const containerStyle = {
+  //   width: "100vw",
+  //   maxWidth: "1080px",
+  //   height: "550px",
+  // };
 
-  const center = {
-    lat: 35.6895,
-    lng: 139.6917,
-  };
+  // const center = {
+  //   lat: 35.6895,
+  //   lng: 139.6917,
+  // };
 
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_KEY,
-  });
+  // const { isLoaded } = useJsApiLoader({
+  //   id: "google-map-script",
+  //   googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_KEY,
+  // });
 
-  const [map, setMap] = React.useState(null);
+  // const [map, setMap] = React.useState(null);
 
-  const onLoad = React.useCallback(function callback(map) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
+  // const onLoad = React.useCallback(function callback(map) {
+  //   // This is just an example of getting and using the map instance!!! don't just blindly copy!
+  //   const bounds = new window.google.maps.LatLngBounds(center);
+  //   map.fitBounds(bounds);
 
-    setMap(map);
-  }, []);
+  //   setMap(map);
+  // }, []);
 
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null);
-  }, []);
+  // const onUnmount = React.useCallback(function callback(map) {
+  //   setMap(null);
+  // }, []);
+
+  // @googlemaps/react-wrapper
 
   return (
     <>
-      {isLoaded ? (
+      {/* {isLoaded ? (
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
-          zoom={2}
           onLoad={onLoad}
+          zoom={5}
           onUnmount={onUnmount}
         >
           <MarkerF
@@ -79,7 +90,14 @@ export default function WorldWeather(props) {
         </GoogleMap>
       ) : (
         messageLoading
-      )}
+      )} */}
+      {/* <div className="h-[50vh] w-full">
+        <googleMap
+          apiKey={{ key: process.env.NEXT_PUBLIC_MAP_KEY }}
+          defaultCenter={defaultMap.center}
+          defaultZoom={defaultMap.zoom}
+        ></googleMap>
+      </div> */}
       {cityList.map((city, index) => (
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded"
