@@ -3,6 +3,8 @@ import axios from "axios";
 import useSWR from "swr";
 import TimeSet from "./TimeSet";
 import WeatherForecast from "./WeatherForecast";
+import { Wrapper } from "@googlemaps/react-wrapper";
+import { Map } from "./Map";
 
 export default function Forecast(props) {
   const cname = props.cname;
@@ -59,6 +61,14 @@ export default function Forecast(props) {
       index = index + 8;
     }
   }
+
+  // Google Map
+  const coord = finfo?.city.coord;
+  const mapKey = process.env.NEXT_PUBLIC_MAP_KEY;
+  const position = {
+    lat: coord?.lat,
+    lng: coord?.lon,
+  };
 
   return (
     <>
@@ -127,11 +137,21 @@ export default function Forecast(props) {
                     <p className="font-bold text-teal-500 text-md text-lg">
                       地図
                     </p>
-                    <div className="max-w-80 h-80"></div>
+                    <div className="max-w-80 h-80">
+                      <Wrapper apiKey={mapKey}>
+                        <Map
+                          center={position}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            borderRadius: "1rem",
+                          }}
+                        />
+                      </Wrapper>
+                    </div>
                   </div>
                 </div>
               </div>
-
               <div className="w-full">
                 <div className="mb-4">
                   <div className="w-full bg-white shadow-lg rounded-2xl">
