@@ -3,8 +3,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import useSWR from "swr";
 import LocationInfo from "./LocationInfo";
-import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
-import googleMapReact from "google-map-react";
+// import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
+// import googleMapReact from "google-map-react";
 
 export default function WorldWeather(props) {
   // 都市

@@ -12,26 +12,48 @@ export default function WeatherForecast(props) {
   const iconUrl = `https://openweathermap.org/img/wn/${ficon}@2x.png`;
 
   return (
-    <li className="flex items-center justify-between flex-col py-3 text-gray-600 border-gray-100 dark:text-gray-200 dark:border-gray-800 sm:w-1/5">
-      {localTime?.day}
-      <br />
-      {localTime?.time}
-      <br />
-      <Image src={iconUrl} width={100} height={100} alt="天気画像" />
-      <h3 className="relative w-full flex-none mb-1 font-semibold flex items-center justify-center">
-        <span className="text-4xl text-amber-500">
-          {Math.round(flist?.main.temp_max)}
-          <span className="text-3xl">&#8451;</span>
-        </span>
-        <span className="text-2xl mx-1.5 text-slate-600">/</span>
-        <span className="text-4xl text-sky-500">
-          {Math.round(flist?.main.temp_min)}
-          <span className="text-3xl">&#8451;</span>
-        </span>
+    <li className="flex items-center justify-between flex-col py-8 text-gray-600 border-gray-100 sm:w-1/5">
+      <h3 className="flex items-center w-full h-full lg:w-64 group text-lg pl-4 text-teal-800 font-semibold">
+        <p className="mx-4">{localTime?.day}</p>
+        <p className="mx-4">{localTime?.time}</p>
       </h3>
-      <h4>降水確率{Math.round(flist?.pop * 100)}%</h4>
-      <h4>湿度{Math.round(flist?.main.humidity)}%</h4>
-      <h4>風速{Math.round(flist?.wind.speed * 10) / 10}m/s</h4>
+      <div className="flex w-full justify-evenly items-center">
+        <div className="flex flex-col items-center">
+          <Image
+            src={iconUrl}
+            width={100}
+            height={100}
+            alt="天気画像"
+            className="drop-shadow-lg"
+          />
+          <div className="relative w-full flex-none mb-1 font-semibold flex items-center justify-center">
+            <span className="text-5xl text-teal-800">
+              {Math.round(flist?.main.temp)}
+              <span className="text-3xl">&#8451;</span>
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-col gap-y-4 w-1/3">
+          <p className="flex justify-between text-teal-500">
+            降水確率
+            <span className="text-right text-teal-800 font-semibold">
+              {Math.round(flist?.pop * 100)}%
+            </span>
+          </p>
+          <p className="flex justify-between text-teal-500">
+            湿度
+            <span className="text-right text-teal-800 font-semibold">
+              {Math.round(flist?.main.humidity)}%
+            </span>
+          </p>
+          <p className="flex justify-between text-teal-500">
+            風速
+            <span className="text-right text-teal-800 font-semibold">
+              {Math.round(flist?.wind.speed * 10) / 10}m/s
+            </span>
+          </p>
+        </div>
+      </div>
     </li>
   );
 }
