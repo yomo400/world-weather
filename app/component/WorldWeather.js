@@ -17,7 +17,11 @@ export default function WorldWeather(props) {
     <div className="animate-spin h-10 w-10 border-4 border-blue-500 rounded-full border-t-transparent my-20"></div>
   );
   const messageError = (
-    <p className="my-20">エラーが出ています。もう一度試してください。</p>
+    <p className="my-20">
+      エラーが出ています。
+      <br />
+      もう一度試してください。
+    </p>
   );
 
   // fetch
@@ -72,7 +76,7 @@ export default function WorldWeather(props) {
   // @googlemaps/react-wrapper
 
   return (
-    <>
+    <div className="min-h-screen bg-gray-100">
       {/* {isLoaded ? (
         <GoogleMap
           mapContainerStyle={containerStyle}
@@ -110,17 +114,21 @@ export default function WorldWeather(props) {
           {city}
         </button>
       ))}
-      <div className="max-w-md rounded-lg flex m-3 p-4 border-double border-4 border-indigo-600 justify-center">
-        {error ? (
-          messageError
-        ) : isLoading ? (
-          messageLoading
-        ) : weather ? (
-          <LocationInfo info={weather?.data.res} />
-        ) : (
-          messageFirst
-        )}
+      <div className="mt-6 gap-x-4 w-11/12 max-w-md mx-auto ">
+        <div className="w-full p-4 bg-white shadow-lg rounded-2xl">
+          <div className="flex flex-wrap text-teal-800 font-bold">
+            {error ? (
+              messageError
+            ) : isLoading ? (
+              messageLoading
+            ) : weather ? (
+              <LocationInfo info={weather?.data.res} />
+            ) : (
+              messageFirst
+            )}
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 }

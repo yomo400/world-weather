@@ -3,14 +3,21 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function LocationInfo(props) {
-  // console.log(props);
   const winfo = props.info;
   const wiconInfo = winfo?.weather[0].icon;
   const wicon = `https://openweathermap.org/img/wn/${wiconInfo}@2x.png`;
 
   return (
     <>
-      <div className="flex-none w-32 mb-10 relative z-10">
+      <div className="w-full items-baseline pl-3">
+        <h2 className="w-full mb-2 text-2xl font-semibold text-teal-800">
+          {winfo?.name}
+          <span className="text-lg ml-3 text-teal-500">
+            {winfo?.sys.country}
+          </span>
+        </h2>
+      </div>
+      <div className="flex-none w-1/2 mb-10 relative z-10 max-w-[10rem]">
         <Image
           src={wicon}
           width={300}
@@ -19,22 +26,14 @@ export default function LocationInfo(props) {
           className="absolute z-10 inset-0 w-full object-contain rounded-lg drop-shadow-lg"
         />
       </div>
-      <div className="flex-auto pl-6">
+      <div className="flex-auto w-1/2">
         <div className="relative flex flex-wrap items-baseline">
-          <h2 className="relative w-full flex-none mb-2 text-2xl font-semibold text-slate-600">
-            {winfo?.name}
-            <span className="text-xl ml-3">{winfo?.sys.country}</span>
-          </h2>
-        </div>
-        <div className="relative flex flex-wrap items-baseline">
-          <h3 className="relative w-full mb-1 font-semibold flex sm:items-center items-start sm:flex-row flex-col">
+          <h3 className="relative w-full mb-1 font-semibold flex sm:items-center items-center flex-row">
             <span className="text-5xl text-amber-500">
               {Math.round(winfo?.main.temp_max)}
               <span className="text-4xl">&#8451;</span>
             </span>
-            <span className="sm:block hidden text-4xl mx-3 text-slate-600">
-              /
-            </span>
+            <span className="text-4xl mx-2 text-slate-600">/</span>
             <span className="text-5xl text-sky-500">
               {Math.round(winfo?.main.temp_min)}
               <span className="text-4xl">&#8451;</span>

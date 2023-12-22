@@ -4,9 +4,5 @@ export default function Home() {
   //理想　WorldStatus←←page←←SWR←←api Route(コール,id隠される)
   //現段階　WorldStatus←←SWR(コール,idバレる)
 
-  return (
-    <div className="bg-teal-50">
-      <WorldWeather />
-    </div>
-  );
+  return <WorldWeather />;
 }
