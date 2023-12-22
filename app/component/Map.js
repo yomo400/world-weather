@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export const Map = ({ children, style, ...options }) => {
   const ref = useRef(null);
@@ -8,11 +8,20 @@ export const Map = ({ children, style, ...options }) => {
     if (ref.current && !map) {
       const option = {
         center: options.center,
-        zoom: 8,
+        zoom: options.zoom,
       };
       setMap(new window.google.maps.Map(ref.current, option));
     }
   }, [ref, map]);
 
-  return <div ref={ref} style={style} />;
+  return (
+    <>
+      <div ref={ref} style={style} />
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, { map });
+        }
+      })}
+    </>
+  );
 };

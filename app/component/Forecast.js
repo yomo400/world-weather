@@ -5,6 +5,7 @@ import TimeSet from "./TimeSet";
 import WeatherForecast from "./WeatherForecast";
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { Map } from "./Map";
+import { Marker } from "./Marker";
 import Link from "next/link";
 
 export default function Forecast(props) {
@@ -144,9 +145,12 @@ export default function Forecast(props) {
                           style={{
                             width: "100%",
                             height: "100%",
-                            borderRadius: "1rem",
+                            borderRadius: "0.5rem",
                           }}
-                        />
+                          zoom={10}
+                        >
+                          <Marker position={position} />
+                        </Map>
                       </Wrapper>
                     </div>
                   </div>
