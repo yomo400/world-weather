@@ -72,6 +72,7 @@ export default function Forecast(props) {
     lat: coord?.lat,
     lng: coord?.lon,
   };
+  // console.log(position);
 
   return (
     <>
@@ -148,9 +149,8 @@ export default function Forecast(props) {
                             borderRadius: "0.5rem",
                           }}
                           zoom={10}
-                        >
-                          <Marker position={position} />
-                        </Map>
+                          // mapTypeId="hybrid"
+                        ></Map>
                       </Wrapper>
                     </div>
                   </div>

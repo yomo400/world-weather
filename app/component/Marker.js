@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 
 export const Marker = (options) => {
   const [marker, setmarker] = useState();
+  // console.log(options);
 
   marker?.addListener("click", () => {
-    if (options.map instanceof google.maps.Map) {
-      const position = marker.getPosition();
-      if (position) options.map.panTo(position);
-    }
+    options.selectCity();
   });
 
   useEffect(() => {

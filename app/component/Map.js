@@ -9,6 +9,8 @@ export const Map = ({ children, style, ...options }) => {
       const option = {
         center: options.center,
         zoom: options.zoom,
+        mapTypeId: options.mapTypeId,
+        disableDefaultUI: true,
       };
       setMap(new window.google.maps.Map(ref.current, option));
     }
