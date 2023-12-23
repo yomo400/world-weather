@@ -35,16 +35,50 @@ export default function WorldWeather(props) {
       lat: -33.8679,
       lng: 151.2073,
     },
+    {
+      name: "Johannesburg",
+      lat: -26.2023,
+      lng: 28.0436,
+    },
+    {
+      name: "New Delhi",
+      lat: 28.6128,
+      lng: 77.2311,
+    },
+    {
+      name: "Hawaii",
+      lat: 20.7503,
+      lng: -156.5003,
+    },
+    {
+      name: "Buenos Aires",
+      lat: -34.6132,
+      lng: -58.3772,
+    },
+    {
+      name: "Vancouver",
+      lat: 49.2497,
+      lng: -123.1193,
+    },
+    {
+      name: "Error",
+      lat: 12,
+      lng: 150,
+    },
   ];
   const [city, setCity] = useState(cityList[0].name);
 
   // エラー文
-  const messageFirst = <p className="my-20">場所をクリックしてください</p>;
+  const messageFirst = (
+    <p className="my-20 text-center text-teal-500">
+      場所をクリックしてください
+    </p>
+  );
   const messageLoading = (
-    <div className="animate-spin h-10 w-10 border-4 border-blue-500 rounded-full border-t-transparent my-20"></div>
+    <div className="animate-spin h-20 w-20 border-8 border-teal-500 rounded-full border-t-transparent my-14 mx-auto" />
   );
   const messageError = (
-    <p className="my-20">
+    <p className="my-20 text-center text-teal-500">
       エラーが出ています。
       <br />
       もう一度試してください。
@@ -74,7 +108,7 @@ export default function WorldWeather(props) {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="w-full h-[65vh]">
+      <div className="w-full aspect-square sm:aspect-[2/1] max-w-[1024px] mx-auto">
         <Wrapper apiKey={mapKey}>
           <Map
             center={mapCenter}
@@ -99,19 +133,17 @@ export default function WorldWeather(props) {
           </Map>
         </Wrapper>
       </div>
-      <div className="mt-6 gap-x-4 w-11/12 max-w-md mx-auto ">
-        <div className="w-full p-4 bg-white shadow-lg rounded-2xl">
-          <div className="flex flex-wrap text-teal-800 font-bold">
-            {error ? (
-              messageError
-            ) : isLoading ? (
-              messageLoading
-            ) : weather ? (
-              <LocationInfo info={weather?.data.res} />
-            ) : (
-              messageFirst
-            )}
-          </div>
+      <div className="mt-6 gap-x-4 w-11/12 max-w-lg mx-auto">
+        <div className="w-full px-4 py-6 bg-white shadow-lg rounded-2xl">
+          {error ? (
+            messageError
+          ) : isLoading ? (
+            messageLoading
+          ) : weather ? (
+            <LocationInfo info={weather?.data.res} />
+          ) : (
+            messageFirst
+          )}
         </div>
       </div>
     </div>

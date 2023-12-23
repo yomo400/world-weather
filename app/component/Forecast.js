@@ -50,7 +50,7 @@ export default function Forecast(props) {
         ? (countryName = "ロシア")
         : e === "AU"
         ? (countryName = "オーストラリア")
-        : (countryName = "エラーが発生しています");
+        : (countryName = "エラー");
       return countryName;
     }
   };
@@ -77,13 +77,13 @@ export default function Forecast(props) {
   return (
     <>
       {isLoading ? (
-        <div className="animate-spin h-10 w-10 border-4 border-blue-500 rounded-full border-t-transparent my-20"></div>
+        <div className="animate-spin h-20 w-20 border-8 border-teal-500 rounded-full border-t-transparent my-20 mx-auto" />
       ) : (
         <div className="relative min-h-screen bg-gray-100">
           <div className="flex flex-col w-full pl-0 sm:p-4 max-w-screen-xl mx-auto">
-            <header className="z-40 items-center w-full h-20 bg-white shadow-lg md:rounded-2xl rounded-b-xl sticky top-0">
-              <div className="z-20 flex flex-col justify-center h-full px-3 mx-auto flex-center">
-                <div className="flex w-full pl-1 lg:max-w-68 sm:pr-2 sm:ml-0">
+            <header className="z-40 w-full h-20 bg-white shadow-lg md:rounded-2xl rounded-b-xl sticky top-0">
+              <div className="flex h-full px-3 mx-auto flex-center">
+                <div className="flex items-baseline w-full pl-1 lg:max-w-68 sm:pr-2 sm:ml-0">
                   <div className="left-0 z-50 flex h-auto h-full">
                     <div className="flex items-center w-full h-full group text-3xl font-bold text-teal-800">
                       {finfo?.city.name}
@@ -93,6 +93,12 @@ export default function Forecast(props) {
                     {changeCode(ccode)}
                   </span>
                 </div>
+                {/* <Link
+                  href="/world"
+                  className="block bg-teal-500 hover:bg-teal-800 text-white font-bold py-2 px-4 mx-auto mb-5 rounded text-center w-1/2 sm:w-full"
+                >
+                  WORLDへ戻る
+                </Link> */}
               </div>
             </header>
             <div className="flex flex-col flex-wrap sm:flex-row mt-6 gap-x-4 w-11/12 sm:w-full mx-auto">
@@ -157,7 +163,7 @@ export default function Forecast(props) {
                 </div>
               </div>
               <div className="w-full">
-                <div className="mb-4 sm:mb-6">
+                <div className="mb-6">
                   <div className="w-full bg-white shadow-lg rounded-2xl">
                     <p className="p-4 font-bold text-teal-500 text-md text-lg flex justify-between items-center">
                       予報
