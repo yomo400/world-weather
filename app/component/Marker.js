@@ -22,6 +22,7 @@ export const Marker = (options) => {
 
   useEffect(() => {
     if (marker) {
+      console.log(options);
       marker.setOptions(options);
     }
   }, [marker, options]);

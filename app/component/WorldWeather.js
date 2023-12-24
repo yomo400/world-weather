@@ -76,7 +76,7 @@ export default function WorldWeather(props) {
     </p>
   );
   const messageLoading = (
-    <div className="animate-spin h-20 w-20 border-8 border-teal-500 rounded-full border-t-transparent my-14 mx-auto" />
+    <div className="animate-spin h-16 w-16 border-8 border-teal-500 rounded-full border-t-transparent my-16 mx-auto" />
   );
   const messageError = (
     <p className="my-20 text-center text-teal-500">
@@ -111,19 +111,18 @@ export default function WorldWeather(props) {
     setCity(e);
   };
   let zoom;
-  width < 640 ? (zoom = 1) : (zoom = 2);
-  console.log(zoom);
+  width < 640 ? (zoom = 1) : (zoom = 2.3);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="w-full aspect-square sm:aspect-[2/1] max-w-[1024px] mx-auto">
+    <>
+      <div className="w-full aspect-square sm:aspect-[9/4]">
         <Wrapper apiKey={mapKey}>
           <Map
             center={mapCenter}
             style={{
               width: "100%",
               height: "100%",
-              borderRadius: "0.5rem",
+              borderRadius: "1rem",
             }}
             mapTypeId="satellite"
             zoom={zoom}
@@ -141,7 +140,7 @@ export default function WorldWeather(props) {
           </Map>
         </Wrapper>
       </div>
-      <div className="mt-6 gap-x-4 w-11/12 max-w-lg mx-auto">
+      <div className="mt-6 gap-x-4 w-11/12 max-w-lg mr-auto">
         <div className="w-full px-4 py-6 bg-white shadow-lg rounded-2xl">
           {error ? (
             messageError
@@ -154,6 +153,6 @@ export default function WorldWeather(props) {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
