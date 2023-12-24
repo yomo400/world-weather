@@ -18,7 +18,7 @@ export default function Forecast(props) {
     error,
     isLoading,
   } = useSWR(`/api/${cname}/forecast`, fetcher);
-  console.log(forecast);
+  // console.log(forecast);
   const finfo = forecast?.data.res;
 
   // 時刻(TimeSet.jsで変換)
@@ -36,24 +36,9 @@ export default function Forecast(props) {
   // console.log(localTime);
 
   // 国コード
+  const regionNames = new Intl.DisplayNames(["ja"], { type: "region" });
   const ccode = finfo?.city.country;
-  const changeCode = (e) => {
-    if (e) {
-      let countryName;
-      e === "JP"
-        ? (countryName = "日本")
-        : e === "GB"
-        ? (countryName = "イギリス")
-        : e === "US"
-        ? (countryName = "アメリカ")
-        : e === "RU"
-        ? (countryName = "ロシア")
-        : e === "AU"
-        ? (countryName = "オーストラリア")
-        : (countryName = "エラー");
-      return countryName;
-    }
-  };
+  const country = ccode && regionNames.of(ccode);
 
   // 予報抽出
   const wfinfo = finfo?.list;
@@ -72,7 +57,6 @@ export default function Forecast(props) {
     lat: coord?.lat,
     lng: coord?.lon,
   };
-  // console.log(position);
 
   return (
     <>
@@ -90,7 +74,7 @@ export default function Forecast(props) {
                     </div>
                   </div>
                   <span className="flex items-end sm:mr-0 sm:right-auto text-teal-500 ml-5">
-                    {changeCode(ccode)}
+                    {country}
                   </span>
                 </div>
                 {/* <Link
@@ -156,7 +140,9 @@ export default function Forecast(props) {
                           }}
                           zoom={10}
                           // mapTypeId="hybrid"
-                        ></Map>
+                        >
+                          <Marker position={position} />
+                        </Map>
                       </Wrapper>
                     </div>
                   </div>

@@ -7,14 +7,16 @@ export default function LocationInfo(props) {
   const wiconInfo = winfo?.weather[0].icon;
   const wicon = `https://openweathermap.org/img/wn/${wiconInfo}@2x.png`;
 
+  const regionNames = new Intl.DisplayNames(["ja"], { type: "region" });
+  const ccode = winfo?.sys.country;
+  const country = regionNames.of(ccode);
+
   return (
     <>
       <div className="w-full items-baseline pl-3">
-        <h2 className="w-full mb-2 text-2xl font-semibold text-teal-800">
+        <h2 className="max-w-xs mb-2 text-2xl font-semibold text-teal-800 flex flex-wrap items-baseline gap-x-4">
           {winfo?.name}
-          <span className="text-lg ml-3 text-teal-500">
-            {winfo?.sys.country}
-          </span>
+          <span className="text-base text-teal-500 font-normal">{country}</span>
         </h2>
       </div>
       <div className="flex justify-evenly">

@@ -6,6 +6,7 @@ import LocationInfo from "./LocationInfo";
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { Map } from "./Map";
 import { Marker } from "./Marker";
+import { useWindowSize } from "./useWindowSize";
 
 export default function WorldWeather(props) {
   // 都市
@@ -85,6 +86,10 @@ export default function WorldWeather(props) {
     </p>
   );
 
+  // WindowSize
+  const [width, height] = useWindowSize();
+  // console.log(width + ":" + height);
+
   // fetch
   const [isFetch, setIsFetch] = useState(false);
   const fetcherApi = (url) => axios.get(url).catch((res) => res.json());
@@ -98,13 +103,16 @@ export default function WorldWeather(props) {
   // @googlemaps/react-wrapper
   const mapKey = process.env.NEXT_PUBLIC_MAP_KEY;
   const mapCenter = {
-    lat: 25,
-    lng: 139,
+    lat: 20,
+    lng: 150,
   };
   const selectCity = (e) => {
     setIsFetch(true);
     setCity(e);
   };
+  let zoom;
+  width < 640 ? (zoom = 1) : (zoom = 2);
+  console.log(zoom);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -118,7 +126,7 @@ export default function WorldWeather(props) {
               borderRadius: "0.5rem",
             }}
             mapTypeId="satellite"
-            zoom={2}
+            zoom={zoom}
           >
             {cityList.map((city, index) => (
               <Marker
