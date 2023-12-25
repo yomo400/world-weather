@@ -1,7 +1,11 @@
 "use client";
 import { createContext, useState, useContext } from "react";
 
-const DataContext = createContext(data, setData);
+const defaultProvider = {
+  data: [],
+  setData: () => [],
+};
+const DataContext = createContext(defaultProvider);
 
 export function useDataContext() {
   return useContext(DataContext);

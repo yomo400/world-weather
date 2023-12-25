@@ -7,6 +7,7 @@ import { Wrapper } from "@googlemaps/react-wrapper";
 import { Map } from "./Map";
 import { Marker } from "./Marker";
 import { useWindowSize } from "./useWindowSize";
+import { useDataContext } from "./DataContext";
 
 export default function WorldWeather(props) {
   // 都市
@@ -67,7 +68,10 @@ export default function WorldWeather(props) {
       lng: 150,
     },
   ];
-  const [city, setCity] = useState(cityList[0].name);
+  const { data, setData } = useDataContext();
+  // const cityList = cdata.cityList;
+  console.log(data);
+  const [city, setCity] = useState();
 
   // エラー文
   const messageFirst = (
@@ -114,45 +118,58 @@ export default function WorldWeather(props) {
   width < 640 ? (zoom = 1) : (zoom = 2.3);
 
   return (
-    <>
-      <div className="w-full aspect-square sm:aspect-[9/4]">
-        <Wrapper apiKey={mapKey}>
-          <Map
-            center={mapCenter}
-            style={{
-              width: "100%",
-              height: "100%",
-              borderRadius: "1rem",
-            }}
-            mapTypeId="satellite"
-            zoom={zoom}
-          >
-            {cityList.map((city, index) => (
-              <Marker
-                key={index}
-                position={{
-                  lat: city.lat,
-                  lng: city.lng,
-                }}
-                selectCity={() => selectCity(city.name)}
-              />
-            ))}
-          </Map>
-        </Wrapper>
-      </div>
-      <div className="mt-6 gap-x-4 w-11/12 max-w-lg mr-auto">
-        <div className="w-full px-4 py-6 bg-white shadow-lg rounded-2xl">
-          {error ? (
-            messageError
-          ) : isLoading ? (
-            messageLoading
-          ) : weather ? (
-            <LocationInfo info={weather?.data.res} />
-          ) : (
-            messageFirst
-          )}
+    <div className=" sm:p-4">
+      <header className="z-40 w-full bg-white shadow-lg sm:rounded-2xl rounded-b-xl sticky md:top-2">
+        <div className="flex mx-auto flex-center">
+          <div className="flex flex-wrap items-baseline w-full p-4 lg:max-w-68 sm:ml-0">
+            <div className="left-0 z-50 flex">
+              <h2 className="text-3xl font-bold text-teal-800 mr-5">
+                World-Weather
+              </h2>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div className="w-11/12 sm:w-full mx-auto">
+        <div className="w-full aspect-square sm:aspect-[9/4] mt-6">
+          <Wrapper apiKey={mapKey}>
+            <Map
+              center={mapCenter}
+              style={{
+                width: "100%",
+                height: "100%",
+                borderRadius: "1rem",
+              }}
+              mapTypeId="satellite"
+              zoom={zoom}
+            >
+              {cityList.map((city, index) => (
+                <Marker
+                  key={index}
+                  position={{
+                    lat: city.lat,
+                    lng: city.lng,
+                  }}
+                  selectCity={() => selectCity(city.name)}
+                />
+              ))}
+            </Map>
+          </Wrapper>
+        </div>
+        <div className="my-6 max-w-lg mr-auto">
+          <div className="w-full px-4 py-6 bg-white shadow-lg rounded-2xl">
+            {error ? (
+              messageError
+            ) : isLoading ? (
+              messageLoading
+            ) : weather ? (
+              <LocationInfo info={weather?.data.res} />
+            ) : (
+              messageFirst
+            )}
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
