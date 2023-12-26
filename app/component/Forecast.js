@@ -198,7 +198,7 @@ export default function Forecast(props) {
           </div>
           <Link
             href="/world"
-            className="block bg-teal-500 hover:bg-teal-800 text-white font-bold py-2 px-4 mx-auto mb-5 rounded text-center w-11/12 sm:w-full"
+            className="block bg-teal-500 hover:bg-teal-800 text-white font-bold py-2 px-4 mx-auto rounded text-center w-11/12 sm:w-full mb-2"
           >
             WORLDへ戻る
           </Link>

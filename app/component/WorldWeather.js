@@ -94,7 +94,7 @@ export default function WorldWeather(props) {
             </Map>
           </Wrapper>
         </div>
-        <div className="my-6 max-w-lg mr-auto">
+        <div className="mt-6 mb-2 max-w-lg mr-auto">
           <div className="w-full px-4 py-6 bg-white shadow-lg rounded-2xl">
             {error ? (
               messageError

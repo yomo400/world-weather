@@ -18,6 +18,12 @@ export default function RootLayout({ children }) {
           <MessageProvider>
             <main className="min-h-screen max-w-screen-lg mx-auto">
               {children}
+              <p className="pl-4 text-teal-500 mb-6">
+                icons by&nbsp;
+                <a target="_blank" href="https://icons8.com">
+                  Icons8
+                </a>
+              </p>
             </main>
           </MessageProvider>
         </CityProvider>
