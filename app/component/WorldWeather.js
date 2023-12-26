@@ -1,94 +1,26 @@
 "use client";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useSWR from "swr";
 import LocationInfo from "./LocationInfo";
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { Map } from "./Map";
 import { Marker } from "./Marker";
 import { useWindowSize } from "./useWindowSize";
-import { useDataContext } from "./DataContext";
+import { useReadCity } from "./CityContext";
+import { useReadMessage } from "./MessageContext";
 
 export default function WorldWeather(props) {
   // 都市
-  const cityList = [
-    {
-      name: "Tokyo",
-      lat: 35.6895,
-      lng: 139.6917,
-    },
-    {
-      name: "London",
-      lat: 51.5085,
-      lng: -0.1257,
-    },
-    {
-      name: "New York",
-      lat: 40.7143,
-      lng: -74.006,
-    },
-    {
-      name: "Moscow",
-      lat: 55.7522,
-      lng: 37.6156,
-    },
-    {
-      name: "Sydney",
-      lat: -33.8679,
-      lng: 151.2073,
-    },
-    {
-      name: "Johannesburg",
-      lat: -26.2023,
-      lng: 28.0436,
-    },
-    {
-      name: "New Delhi",
-      lat: 28.6128,
-      lng: 77.2311,
-    },
-    {
-      name: "Hawaii",
-      lat: 20.7503,
-      lng: -156.5003,
-    },
-    {
-      name: "Buenos Aires",
-      lat: -34.6132,
-      lng: -58.3772,
-    },
-    {
-      name: "Vancouver",
-      lat: 49.2497,
-      lng: -123.1193,
-    },
-    {
-      name: "Error",
-      lat: 12,
-      lng: 150,
-    },
-  ];
-  const { data, setData } = useDataContext();
-  // const cityList = cdata.cityList;
-  console.log(data);
+  const cityList = useReadCity();
   const [city, setCity] = useState();
 
   // エラー文
-  const messageFirst = (
-    <p className="my-20 text-center text-teal-500">
-      場所をクリックしてください
-    </p>
-  );
-  const messageLoading = (
-    <div className="animate-spin h-16 w-16 border-8 border-teal-500 rounded-full border-t-transparent my-16 mx-auto" />
-  );
-  const messageError = (
-    <p className="my-20 text-center text-teal-500">
-      エラーが出ています。
-      <br />
-      もう一度試してください。
-    </p>
-  );
+  const messages = useReadMessage();
+  const messageFirst = messages.first;
+  const messageLoading = messages.loading;
+  const messageError = messages.error;
+  // console.log(messages);
 
   // WindowSize
   const [width, height] = useWindowSize();
@@ -115,7 +47,13 @@ export default function WorldWeather(props) {
     setCity(e);
   };
   let zoom;
-  width < 640 ? (zoom = 1) : (zoom = 2.3);
+  width < 640 ? (zoom = 1) : (zoom = 2);
+  const markerIcon = (
+    <span class="relative flex h-3 w-3">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+    </span>
+  );
 
   return (
     <div className=" sm:p-4">
@@ -151,6 +89,18 @@ export default function WorldWeather(props) {
                     lng: city.lng,
                   }}
                   selectCity={() => selectCity(city.name)}
+                  icon={{
+                    fillColor: "#FF0000", //塗り潰し色
+                    fillOpacity: 0.8, //塗り潰し透過率
+                    // path: google.maps.SymbolPath.CIRCLE, //円を指定
+                    scale: 16, //円のサイズ
+                    strokeColor: "#FF0000", //枠の色
+                    strokeWeight: 1.0,
+                  }}
+                  // label={{
+                  //   text: city.name,
+                  //   color: "rgb(20 184 166)",
+                  // }}
                 />
               ))}
             </Map>

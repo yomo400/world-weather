@@ -7,9 +7,15 @@ import { Wrapper } from "@googlemaps/react-wrapper";
 import { Map } from "./Map";
 import { Marker } from "./Marker";
 import Link from "next/link";
+import { useReadMessage } from "./MessageContext";
 
 export default function Forecast(props) {
   const cname = props.cname;
+
+  // エラー文
+  const messages = useReadMessage();
+  const messageLoading = messages.loading;
+  const messageError = messages.error;
 
   // fetch
   const fetcher = (url) => axios.get(url).catch((res) => res.json());
@@ -51,7 +57,6 @@ export default function Forecast(props) {
       index = index + 8;
     }
   }
-  // console.log(finfo?.city.population);
 
   // Google Map
   const coord = finfo?.city.coord;
@@ -63,8 +68,14 @@ export default function Forecast(props) {
 
   return (
     <>
-      {isLoading ? (
-        <div className="animate-spin h-20 w-20 border-8 border-teal-500 rounded-full border-t-transparent my-40 mx-auto" />
+      {error ? (
+        <div className="h-screen flex justify-center items-center">
+          {messageError}
+        </div>
+      ) : isLoading ? (
+        <div className="h-screen flex justify-center items-center">
+          {messageLoading}
+        </div>
       ) : (
         <div className="flex flex-col w-full pl-0 sm:p-4">
           <header className="z-40 w-full bg-white shadow-lg sm:rounded-2xl rounded-b-xl sticky md:top-2">

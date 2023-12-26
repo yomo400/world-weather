@@ -1,4 +1,5 @@
-import { DataProvider } from "./component/DataContext";
+import { CityProvider } from "./component/CityContext";
+import { MessageProvider } from "./component/MessageContext";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -13,11 +14,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ja">
       <body className={`bg-gray-100 ${inter.className}`}>
-        <DataProvider>
-          <main className="min-h-screen max-w-screen-lg mx-auto">
-            {children}
-          </main>
-        </DataProvider>
+        <CityProvider>
+          <MessageProvider>
+            <main className="min-h-screen max-w-screen-lg mx-auto">
+              {children}
+            </main>
+          </MessageProvider>
+        </CityProvider>
       </body>
     </html>
   );

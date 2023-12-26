@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 
 export const Marker = (options) => {
   const [marker, setmarker] = useState();
-  // console.log(options);
+  console.log(options);
+  const icon = {
+    url: "./62.jpg",
+    scaledSize: new google.maps.Size(40, 40),
+  };
+
+  options = { ...options, icon };
 
   marker?.addListener("click", () => {
     options.selectCity();
