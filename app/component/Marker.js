@@ -4,7 +4,7 @@ export const Marker = (options) => {
   const [marker, setmarker] = useState();
   // console.log(options);
   const icon = {
-    url: "./anime02.gif",
+    url: "/anime02.gif",
     scaledSize: new google.maps.Size(40, 40),
   };
 

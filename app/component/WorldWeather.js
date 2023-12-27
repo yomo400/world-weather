@@ -69,7 +69,7 @@ export default function WorldWeather(props) {
         </div>
       </header>
       <div className="w-11/12 sm:w-full mx-auto">
-        <div className="w-full aspect-square sm:aspect-[9/4] mt-6">
+        <div className="w-full aspect-square sm:aspect-[9/4] mt-6 bg-white shadow-lg rounded-2xl">
           <Wrapper apiKey={mapKey}>
             <Map
               center={mapCenter}

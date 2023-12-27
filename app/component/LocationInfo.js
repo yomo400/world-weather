@@ -42,12 +42,12 @@ export default function LocationInfo(props) {
             </span>
           </h3>
           <div className="mb-6 text-teal-500">
-            <h3 className="text-lg font-normal">
+            <h3 className="text-base font-normal">
               <span>風速</span>
-              <span className="ml-4 text-2xl text-teal-500">
+              <span className="ml-4 text-xl text-teal-500">
                 {Math.round(winfo?.wind.speed * 10) / 10}
-                <span>m</span>
               </span>
+              <span>&nbsp;m</span>
             </h3>
           </div>
           <Link
