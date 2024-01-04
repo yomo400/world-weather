@@ -1,34 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![](public/WorldWeatherTop.png)
 
-## Getting Started
+## URL
 
-First, run the development server:
+どなたでも登録なしでご利用できます
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+[World-Weather](https://world-weather-zeta.vercel.app/world)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 概要
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+「World-Weather」は、世界中の都市の天気情報をリアルタイムで確認できる便利なウェブサイトです。<br>
+Next.js、OpenWeatherAPI、そして Google Maps API を活用し、<br>
+シンプルで使いやすいデザインに仕上げ、ユーザーが簡単かつ迅速に必要な気象情報を取得できるようにしました。
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 開発への想いや動機
 
-## Learn More
+このサイトの開発においては、ユーザーが簡単かつ迅速に目的の情報を得られることを最優先に考えました。旅行やビジネスにおいて天気情報が与える影響を考慮し、ユーザーがどこにいても、どんなデバイスを使っても快適に利用できるようなサービスを目指しました。
 
-To learn more about Next.js, take a look at the following resources:
+## 画面と機能
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<img src="public/WorldWeatherWorld.png" width="600">
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+地図上のアイコンから、その都市の現在の天気と気温を見ることが出来ます。<br>
+DETAIL から詳細画面へ遷移します。
 
-## Deploy on Vercel
+<img src="public/WorldWeatherCity.png" width="600">
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+現地時刻や詳細地図、1~5 日後の天気予報まで見ることが出来ます。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 使用技術
+
+#### フロントエンド
+
+- Next.js
+  <br>
+  JavaScript,Prettier を用いてコーディングしています。デザインは TailWindCSS を使用。
+
+#### API
+
+- OpenWeather
+  <br>
+  天気情報を取得する API として採用しました。
+- Google Maps JavaScript
+  <br>
+  地図を取得する API として採用しました。<br>React で使うライブラリとして@googlemaps/react-wrapper を使っています。地図の中央位置、ズーム倍率の初期設定、ピンを画像に変更など
+
+#### サーバー
+
+- Vercel
+  <br>
+  デプロイはすべて Vercel 上で行っています。github にプッシュすれば自動でデプロイされ、Vercel のサーバーにて公開されます。
