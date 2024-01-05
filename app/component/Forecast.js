@@ -162,12 +162,7 @@ export default function Forecast(props) {
                         zoom={10}
                         // mapTypeId="hybrid"
                       >
-                        <Marker
-                          position={position}
-                          // style={{
-                          // background={"#cccccc"}
-                          // }}
-                        />
+                        <Marker position={position} />
                       </Map>
                     </Wrapper>
                   </div>
