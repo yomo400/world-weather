@@ -1,12 +1,13 @@
-<style>
-  h2 {
-    color: rgb(17 94 89);
-  }
-  h3 {
-    color: rgb(20 184 166);
-  }
-</style>
-
+<head>
+  <style>
+    h2 {
+      color: rgb(17 94 89);
+    }
+    h3 {
+      color: rgb(20 184 166);
+    }
+  </style>
+</head>
 
 ![](public/WorldWeatherTop.png)
 
