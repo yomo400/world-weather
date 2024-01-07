@@ -3,7 +3,6 @@ import { MessageProvider } from "./component/MessageContext";
 import "./globals.css";
 import { IBM_Plex_Sans_JP } from "next/font/google";
 
-// const inter = Inter({ subsets: ["latin"] });
 const IBM = IBM_Plex_Sans_JP({
   preload: false,
   display: "swap",

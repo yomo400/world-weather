@@ -30,15 +30,15 @@ export default function LocationInfo(props) {
           />
         </div>
         <div className="w-44 ">
-          <h3 className="relative w-full mb-2 font-semibold flex sm:items-center items-center flex-row">
-            <span className="text-4xl sm:text-5xl text-amber-500">
+          <h3 className="relative w-full mb-2 font-semibold flex items-center flex-row">
+            <span className="text-4xl sm:text-4xl text-amber-500">
               {Math.round(winfo?.main.temp_max)}
-              <span className="text-2xl sm:text-4xl">&#8451;</span>
+              <span className="text-2xl sm:text-3xl">&#8451;</span>
             </span>
-            <span className="text-2xl sm:text-4xl mx-2 text-teal-800">/</span>
-            <span className="text-4xl sm:text-5xl text-sky-500">
+            <span className="text-2xl sm:text-3xl mx-2 text-teal-800">/</span>
+            <span className="text-4xl sm:text-4xl text-sky-500">
               {Math.round(winfo?.main.temp_min)}
-              <span className="text-2xl sm:text-4xl">&#8451;</span>
+              <span className="text-2xl sm:text-3xl">&#8451;</span>
             </span>
           </h3>
           <div className="mb-6 text-teal-500">

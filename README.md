@@ -1,15 +1,24 @@
+<style>
+  h2 {
+    color: rgb(17 94 89);
+  }
+  h3 {
+    color: rgb(20 184 166);
+  }
+</style>
+
+
 ![](public/WorldWeatherTop.png)
 
 ## URL
 
-どなたでも登録なしでご利用できます
-
+どなたでも登録なしでご利用できます<br>
 [World-Weather](https://world-weather-zeta.vercel.app/world)
 
 ## 概要
 
 「World-Weather」は、世界中の都市の天気情報をリアルタイムで確認できる便利なウェブサイトです。<br>
-Next.js、OpenWeatherAPI、そして Google Maps API を活用し、シンプルで使いやすいデザインに仕上げ、ユーザーが簡単かつ迅速に必要な気象情報を取得できるようにしました。
+Next.js、OpenWeatherAPI、GoogleMapsAPIを活用し、シンプルで使いやすいデザインに仕上げ、ユーザーが様々なデバイスで必要な気象情報を取得できるようにしました。
 
 ## 開発への想いや動機
 
@@ -18,29 +27,34 @@ Next.js、OpenWeatherAPI、そして Google Maps API を活用し、シンプル
 
 ## 画面と機能
 
-| <h4 style="text-align:center;">都市選択</h4> | <h4 style="text-align:center;">都市詳細</h4> |
+| <h3 style="text-align:center;">都市選択</h3> | <h3 style="text-align:center;">都市詳細</h3> |
 |---|---|
-| <img src="public/WorldWeatherWorld.png" width="600"> | <img src="public/WorldWeatherCity.png" width="600"> |
-| 地図上のアイコンをクリックすると、その都市の現在の天気と気温を見ることが出来ます。DETAIL から詳細画面へ遷移します。 | 現地時刻や詳細地図、1 ～ 5 日後の天気予報まで見ることが出来ます。 |
+| ![](public/WorldWeatherWorld.png) | ![](public/WorldWeatherCity.png) |
+| 地図上のアイコンをクリックすると、その都市の現在の天気と気温を見ることが出来ます。DETAIL から詳細画面へ遷移します。 | 現地時刻や詳細地図、1~5日後の天気予報まで見ることが出来ます。 |
 
 ## 使用技術
 
-#### フロントエンド
+### フロントエンド
 
-- Next.js
-  <br>
-  JavaScript,Prettier を用いてコーディングしています。デザインは TailWindCSS を使用。
+- Next.js 14.0.3
+- JavaScript
+- TailWindCSS 3.3.6
+- Prettier
+- ESLint
 
-#### API
 
-- OpenWeather
-  <br>
-  天気情報を取得する API として採用しました。
+### API
+
+- OpenWeather<br>
+  天気情報を取得する API として採用しています。<br>
+  都市選択画面では現在の天気情報、都市詳細画面では天気予報情報を、それぞれ別のエンドポイントから呼び出しています。<br>
+  また、Next.jsのAPI Routesを経由することによって、セキュリティを強化しています。
+
 - Google Maps JavaScript
   <br>
-  地図を取得する API として採用しました。<br>React で使うライブラリとして@googlemaps/react-wrapper を使っています。地図の中央位置、ズーム倍率の初期設定、ピンを画像に変更など
+  地図を取得する API として採用しています。Next.js上で使う為、ライブラリとして@googlemaps/react-wrapper を使用しています。<br>地図の中央位置、ズーム倍率などの初期設定、ピンを画像に変更など、見やすく分かりやすいデザインにするためにカスタムしています。
 
-#### サーバー
+### サーバー
 
 - Vercel
   <br>
