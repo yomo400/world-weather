@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Forecast from "../../component/Forecast";
 
 export default function Page({ params }) {

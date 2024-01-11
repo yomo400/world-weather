@@ -1,10 +1,11 @@
-import { InfoWindow } from "@react-google-maps/api";
+"use client";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const Marker = (options) => {
+  const params = usePathname();
   const cityName = options.cityName;
   const [marker, setmarker] = useState();
-  const [hoverinfo, sethoverinfo] = useState();
   // console.log(options);
   const icon = {
     url: "/anime02.gif",
@@ -17,20 +18,21 @@ export const Marker = (options) => {
     options.selectCity();
   });
 
-  sethoverinfo(
-    new google.maps.InfoWindow({
-      // map: map,
+  if (params === "/world") {
+    const infowindow = new google.maps.InfoWindow({
       content: cityName,
-      noSuppress: true,
-      zIndex: 2,
-      // pixelOffset: pixelOffset,
-    })
-  );
-
-  // marker?.addListener("mouseover", () => {
-  //   // console.log(cityName);
-  //   hoverinfo.open(map);
-  // });
+      disableAutoPan: true,
+    });
+    // console.log(infowindow);
+    marker?.addListener("mouseover", () => {
+      infowindow.open({
+        anchor: marker,
+      });
+    });
+    marker?.addListener("mouseout", () => {
+      infowindow.close();
+    });
+  }
 
   useEffect(() => {
     if (!marker) {
