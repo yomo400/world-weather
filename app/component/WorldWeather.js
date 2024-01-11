@@ -83,6 +83,7 @@ export default function WorldWeather(props) {
                     lng: city.lng,
                   }}
                   selectCity={() => selectCity(city.name)}
+                  cityName={city.name}
                 />
               ))}
             </Map>
