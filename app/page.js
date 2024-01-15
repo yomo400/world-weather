@@ -2,6 +2,7 @@
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { Marker } from "./component/Marker";
 import { Map } from "./component/Map";
+import Link from "next/link";
 
 export default function Home() {
   const mapKey = process.env.NEXT_PUBLIC_MAP_KEY;
@@ -90,6 +91,12 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <Link
+          href="/world"
+          className="block bg-teal-500 hover:bg-teal-800 text-white font-bold py-2 px-4 mx-auto rounded text-center w-11/12 sm:w-full mb-2"
+        >
+          WORLDへ
+        </Link>
       </div>
     </div>
   );
