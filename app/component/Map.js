@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 export const Map = ({ children, style, ...options }) => {
   const ref = useRef(null);
   const [map, setMap] = useState();
-  const [point, setPoint] = useState();
 
   useEffect(() => {
     if (ref.current && !map) {
@@ -16,11 +15,13 @@ export const Map = ({ children, style, ...options }) => {
       };
       setMap(new google.maps.Map(ref.current, option));
     }
-    // map?.addListener("click", () => {
-    //   let latlng = google.maps.MapMouseEvent.latLng;
-    //   console.log(latlng.lat());
-    //   //   console.log(latlng.lat());
-    // });
+    map?.addListener("click", (e) => {
+      let latlng = e.latLng;
+      options.setLatLng({ lat: latlng.lat(), lng: latlng.lng() });
+      console.log(latlng.lat());
+      // console.log(latlng.lat());
+      //   console.log(latlng.lat());
+    });
   }, [ref, map]);
 
   return (
