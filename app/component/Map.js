@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 export const Map = ({ children, style, ...options }) => {
   const ref = useRef(null);
   const [map, setMap] = useState();
+  // console.log(options);
 
   useEffect(() => {
     if (ref.current && !map) {
@@ -17,10 +18,8 @@ export const Map = ({ children, style, ...options }) => {
     }
     map?.addListener("click", (e) => {
       let latlng = e.latLng;
-      options.setLatLng({ lat: latlng.lat(), lng: latlng.lng() });
-      console.log(latlng.lat());
-      // console.log(latlng.lat());
-      //   console.log(latlng.lat());
+      // let lat = latlng.lat();
+      options.getCoordinates({ lat: latlng.lat(), lng: latlng.lng() });
     });
   }, [ref, map]);
 

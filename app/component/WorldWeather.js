@@ -26,14 +26,14 @@ export default function WorldWeather(props) {
   const [width, height] = useWindowSize();
   // console.log(width + ":" + height);
 
-  // fetch
-  const [isFetch, setIsFetch] = useState(false);
+  // Weather fetch
+  const [weatherFetch, setWeatherFetch] = useState(false);
   const fetcherApi = (url) => axios.get(url).catch((res) => res.json());
   const {
     data: weather,
     error,
     isLoading,
-  } = useSWR(isFetch ? `/api/${city}/weather` : null, fetcherApi);
+  } = useSWR(weatherFetch ? `/api/${city}/weather` : null, fetcherApi);
   // console.log(weather);
 
   // @googlemaps/react-wrapper
@@ -46,7 +46,7 @@ export default function WorldWeather(props) {
   width < 640 ? (zoom = 1) : (zoom = 2);
   // Marker clicked
   const selectCity = (e) => {
-    setIsFetch(true);
+    setWeatherFetch(true);
     setCity(e);
   };
   // Any points clicked
@@ -55,14 +55,31 @@ export default function WorldWeather(props) {
   // yes→ weather from openweather using city
   //  no→ weather from openweather using Coordinate
   const [latLng, setLatLng] = useState();
-  // const getCoordinates = new Promise(function (resolve, reject, e) {
-  //   setLatLng(e);
-  // });
-  // getCoordinates.then(console.log(latLng));
   const getCoordinates = (e) => {
     setLatLng(e);
-    latLng ? console.log(latLng) : console.log("none");
   };
+  const lat = latLng?.lat;
+  const lng = latLng?.lng;
+  const [addressFetch, setAddressFetch] = useState(false);
+
+  const {
+    data: address,
+    error: addressError,
+    isLoading: addressLoading,
+  } = useSWR(
+    addressFetch
+      ? `http://api.openweathermap.org/geo/1.0/reverse?appid=81265787ad6274ec35fd3d76001294e9&lat=${lat}&lon=${lng}`
+      : // ? `api/geo?lat={lat}&lon={lng}`
+        null,
+    fetcherApi
+  );
+  useEffect(() => {
+    console.log(latLng);
+    setAddressFetch(true);
+  }, [latLng]);
+  useEffect(() => {
+    console.log(address);
+  }, [address]);
 
   return (
     <div className="sm:p-4">
@@ -89,7 +106,9 @@ export default function WorldWeather(props) {
               }}
               mapTypeId="satellite"
               zoom={zoom}
-              setLatLng={(e) => getCoordinates(e)}
+              getCoordinates={(e) => {
+                getCoordinates(e);
+              }}
             >
               {cityList.map((city, index) => (
                 <Marker
