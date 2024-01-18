@@ -19,6 +19,7 @@ export default function WorldWeather(props) {
   const messages = useReadMessage();
   const messageFirst = messages.first;
   const messageLoading = messages.loading;
+  const messageCityError = messages.cityError;
   const messageError = messages.error;
   // console.log(messages);
 
@@ -31,7 +32,7 @@ export default function WorldWeather(props) {
   const fetcherApi = (url) => axios.get(url).catch((res) => res.json());
   const {
     data: weather,
-    error,
+    error: cityError,
     isLoading,
   } = useSWR(weatherFetch ? `/api/${city}/weather` : null, fetcherApi);
   // console.log(weather);
@@ -48,6 +49,7 @@ export default function WorldWeather(props) {
   const selectCity = (e) => {
     setWeatherFetch(true);
     setCity(e);
+    console.log(city);
   };
   // Any points clicked
   // Coordinates from GoogleMap →
@@ -73,13 +75,15 @@ export default function WorldWeather(props) {
         null,
     fetcherApi
   );
+  const geoCity = address?.data[0].name;
   useEffect(() => {
-    console.log(latLng);
+    // console.log(latLng);
     setAddressFetch(true);
   }, [latLng]);
   useEffect(() => {
-    console.log(address);
-  }, [address]);
+    console.log(geoCity);
+    selectCity(geoCity);
+  }, [geoCity]);
 
   return (
     <div className="sm:p-4">
@@ -126,7 +130,9 @@ export default function WorldWeather(props) {
         </div>
         <div className="mt-6 mb-2 max-w-lg mr-auto">
           <div className="w-full px-4 py-6 bg-white shadow-lg rounded-2xl">
-            {error ? (
+            {cityError ? (
+              messageCityError
+            ) : addressError ? (
               messageError
             ) : isLoading ? (
               messageLoading

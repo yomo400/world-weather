@@ -10,6 +10,9 @@ const messages = {
   loading: (
     <div className="animate-spin h-16 w-16 border-8 border-teal-500 rounded-full border-t-transparent my-16 mx-auto" />
   ),
+  cityError: (
+    <p className="my-20 text-center text-teal-500">都市が見つかりません。</p>
+  ),
   error: (
     <p className="my-20 text-center text-teal-500">
       エラーが出ています。
