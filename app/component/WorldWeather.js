@@ -11,11 +11,11 @@ import { useReadCity } from "./CityContext";
 import { useReadMessage } from "./MessageContext";
 
 export default function WorldWeather(props) {
-  // city
+  // 都市
   const cityList = useReadCity();
   const [city, setCity] = useState();
 
-  // error sentence
+  // エラー文
   const messages = useReadMessage();
   const messageFirst = messages.first;
   const messageLoading = messages.loading;
@@ -42,30 +42,15 @@ export default function WorldWeather(props) {
     lat: 20,
     lng: 150,
   };
-  let zoom;
-  width < 640 ? (zoom = 1) : (zoom = 2);
-  // Marker clicked
   const selectCity = (e) => {
     setIsFetch(true);
     setCity(e);
   };
-  // Any points clicked
-  // Coordinates from GoogleMap →
-  // Coordinates to reverseGeocoding  from openweather →
-  // yes→ weather from openweather using city
-  //  no→ weather from openweather using Coordinate
-  const [latLng, setLatLng] = useState();
-  // const getCoordinates = new Promise(function (resolve, reject, e) {
-  //   setLatLng(e);
-  // });
-  // getCoordinates.then(console.log(latLng));
-  const getCoordinates = (e) => {
-    setLatLng(e);
-    latLng ? console.log(latLng) : console.log("none");
-  };
+  let zoom;
+  width < 640 ? (zoom = 1) : (zoom = 2);
 
   return (
-    <div className="sm:p-4">
+    <div className=" sm:p-4">
       <header className="z-40 w-full bg-white shadow-lg sm:rounded-2xl rounded-b-xl sticky md:top-2">
         <div className="flex mx-auto flex-center">
           <div className="flex flex-wrap items-baseline w-full p-4 lg:max-w-68 sm:ml-0">
@@ -89,7 +74,6 @@ export default function WorldWeather(props) {
               }}
               mapTypeId="satellite"
               zoom={zoom}
-              setLatLng={(e) => getCoordinates(e)}
             >
               {cityList.map((city, index) => (
                 <Marker
