@@ -34,7 +34,11 @@ export default function WorldWeather(props) {
     data: weather,
     error: cityError,
     isLoading,
-  } = useSWR(weatherFetch ? `/api/${city}/weather` : null, fetcherApi);
+  } = useSWR(weatherFetch ? `/api/${city}/weather` : null, fetcherApi, {
+    onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+      if (retryCount >= 1) return;
+    },
+  });
   // console.log(weather);
 
   // @googlemaps/react-wrapper
@@ -49,7 +53,7 @@ export default function WorldWeather(props) {
   const selectCity = (e) => {
     setWeatherFetch(true);
     setCity(e);
-    console.log(city);
+    // console.log(city);
   };
   // Any points clicked
   // Coordinates from GoogleMap →
@@ -60,6 +64,7 @@ export default function WorldWeather(props) {
   const getCoordinates = (e) => {
     setLatLng(e);
   };
+  latLng && console.log(latLng);
   const lat = latLng?.lat;
   const lng = latLng?.lng;
   const [addressFetch, setAddressFetch] = useState(false);
@@ -70,20 +75,28 @@ export default function WorldWeather(props) {
     isLoading: addressLoading,
   } = useSWR(
     addressFetch
-      ? `http://api.openweathermap.org/geo/1.0/reverse?appid=81265787ad6274ec35fd3d76001294e9&lat=${lat}&lon=${lng}`
+      ? `api/geo?lat=${lat}&lon=${lng}`
       : // ? `api/geo?lat={lat}&lon={lng}`
+        // ? `http://api.openweathermap.org/geo/1.0/reverse?appid=81265787ad6274ec35fd3d76001294e9&lat=${lat}&lon=${lng}`
         null,
-    fetcherApi
+    fetcherApi,
+    {
+      onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+        if (retryCount >= 1) return;
+      },
+    }
   );
+  // if (address) {
   const geoCity = address?.data[0].name;
   useEffect(() => {
     // console.log(latLng);
     setAddressFetch(true);
   }, [latLng]);
   useEffect(() => {
-    console.log(geoCity);
+    geoCity && console.log(address?.data[0]);
     selectCity(geoCity);
   }, [geoCity]);
+  // }
 
   return (
     <div className="sm:p-4">
@@ -131,8 +144,8 @@ export default function WorldWeather(props) {
         <div className="mt-6 mb-2 max-w-lg mr-auto">
           <div className="w-full px-4 py-6 bg-white shadow-lg rounded-2xl">
             {cityError ? (
-              messageCityError
-            ) : addressError ? (
+              //   messageCityError
+              // ) : addressError ? (
               messageError
             ) : isLoading ? (
               messageLoading
