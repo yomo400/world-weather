@@ -15,7 +15,7 @@ export const Marker = (options) => {
   options = { ...options, icon };
 
   marker?.addListener("click", () => {
-    options.selectCity();
+    options.setCity();
   });
 
   if (params === "/world") {

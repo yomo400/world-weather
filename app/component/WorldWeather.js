@@ -27,19 +27,64 @@ export default function WorldWeather(props) {
   const [width, height] = useWindowSize();
   // console.log(width + ":" + height);
 
+  // Coordinates from GoogleMap →
+  // weather from openweather using Coordinate →
+  // Coordinates to reverseGeocoding  from openweather →
+  // yes → name from openweather using city → detail true
+  //  no → no name error → detail false
+
+  // Coordinates
+  const [latLng, setLatLng] = useState();
+  const lat = latLng?.lat;
+  const lng = latLng?.lng;
+  const getCoordinates = (e) => {
+    setLatLng(e);
+  };
+
   // Weather fetch
   const [weatherFetch, setWeatherFetch] = useState(false);
   const fetcherApi = (url) => axios.get(url).catch((res) => res.json());
   const {
     data: weather,
-    error: cityError,
+    error: weatherError,
     isLoading,
-  } = useSWR(weatherFetch ? `/api/${city}/weather` : null, fetcherApi, {
-    onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-      if (retryCount >= 1) return;
-    },
-  });
-  // console.log(weather);
+  } = useSWR(
+    weatherFetch ? `/api/weather?lat=${lat}&lon=${lng}` : null,
+    fetcherApi,
+    {
+      onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+        if (retryCount >= 1) return;
+      },
+    }
+  );
+  // /api/${city}/weather
+
+  // address fetch
+  const [addressFetch, setAddressFetch] = useState(false);
+  const {
+    data: address,
+    error: addressError,
+    isLoading: addressLoading,
+  } = useSWR(
+    addressFetch ? `api/geo?lat=${lat}&lon=${lng}` : null,
+    fetcherApi,
+    {
+      onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+        if (retryCount >= 1) return;
+      },
+    }
+  );
+
+  let geoCity;
+  useEffect(() => {
+    // console.log(latLng);
+    setAddressFetch(true);
+  }, [latLng]);
+  useEffect(() => {
+    geoCity = address?.data.res[0]?.name;
+    console.log(geoCity);
+    setCity(geoCity);
+  }, [address]);
 
   // @googlemaps/react-wrapper
   const mapKey = process.env.NEXT_PUBLIC_MAP_KEY;
@@ -50,53 +95,12 @@ export default function WorldWeather(props) {
   let zoom;
   width < 640 ? (zoom = 1) : (zoom = 2);
   // Marker clicked
-  const selectCity = (e) => {
-    setWeatherFetch(true);
-    setCity(e);
+  useEffect(() => {
     // console.log(city);
-  };
-  // Any points clicked
-  // Coordinates from GoogleMap →
-  // Coordinates to reverseGeocoding  from openweather →
-  // yes→ weather from openweather using city
-  //  no→ weather from openweather using Coordinate
-  const [latLng, setLatLng] = useState();
-  const getCoordinates = (e) => {
-    setLatLng(e);
-  };
-  latLng && console.log(latLng);
-  const lat = latLng?.lat;
-  const lng = latLng?.lng;
-  const [addressFetch, setAddressFetch] = useState(false);
-
-  const {
-    data: address,
-    error: addressError,
-    isLoading: addressLoading,
-  } = useSWR(
-    addressFetch
-      ? `api/geo?lat=${lat}&lon=${lng}`
-      : // ? `api/geo?lat={lat}&lon={lng}`
-        // ? `http://api.openweathermap.org/geo/1.0/reverse?appid=81265787ad6274ec35fd3d76001294e9&lat=${lat}&lon=${lng}`
-        null,
-    fetcherApi,
-    {
-      onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-        if (retryCount >= 1) return;
-      },
+    if (latLng) {
+      setWeatherFetch(true);
     }
-  );
-  // if (address) {
-  const geoCity = address?.data[0].name;
-  useEffect(() => {
-    // console.log(latLng);
-    setAddressFetch(true);
   }, [latLng]);
-  useEffect(() => {
-    geoCity && console.log(address?.data[0]);
-    selectCity(geoCity);
-  }, [geoCity]);
-  // }
 
   return (
     <div className="sm:p-4">
@@ -131,10 +135,10 @@ export default function WorldWeather(props) {
                 <Marker
                   key={index}
                   position={{
-                    lat: city.lat,
-                    lng: city.lng,
+                    lat: city.coordinates.lat,
+                    lng: city.coordinates.lng,
                   }}
-                  selectCity={() => selectCity(city.name)}
+                  setCity={() => setLatLng(city.coordinates)}
                   cityName={city.name}
                 />
               ))}
@@ -143,7 +147,7 @@ export default function WorldWeather(props) {
         </div>
         <div className="mt-6 mb-2 max-w-lg mr-auto">
           <div className="w-full px-4 py-6 bg-white shadow-lg rounded-2xl">
-            {cityError ? (
+            {weatherError ? (
               //   messageCityError
               // ) : addressError ? (
               messageError
