@@ -13,13 +13,11 @@ import { useReadMessage } from "./MessageContext";
 export default function WorldWeather(props) {
   // city
   const cityList = useReadCity();
-  const [city, setCity] = useState();
 
   // error sentence
   const messages = useReadMessage();
   const messageFirst = messages.first;
   const messageLoading = messages.loading;
-  const messageCityError = messages.cityError;
   const messageError = messages.error;
   // console.log(messages);
 
@@ -82,8 +80,7 @@ export default function WorldWeather(props) {
   }, [latLng]);
   useEffect(() => {
     geoCity = address?.data.res[0]?.name;
-    console.log(geoCity);
-    setCity(geoCity);
+    // console.log(geoCity);
   }, [address]);
 
   // @googlemaps/react-wrapper

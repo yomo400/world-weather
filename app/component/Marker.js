@@ -14,11 +14,11 @@ export const Marker = (options) => {
 
   options = { ...options, icon };
 
-  marker?.addListener("click", () => {
-    options.setCity();
-  });
-
   if (params === "/world") {
+    marker?.addListener("click", () => {
+      options.setCity();
+    });
+
     const infowindow = new google.maps.InfoWindow({
       content: cityName,
       disableAutoPan: true,

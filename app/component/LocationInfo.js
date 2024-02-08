@@ -9,7 +9,10 @@ export default function LocationInfo(props) {
 
   const regionNames = new Intl.DisplayNames(["ja"], { type: "region" });
   const ccode = winfo?.sys.country;
-  const country = regionNames.of(ccode);
+  let country;
+  ccode
+    ? (country = regionNames.of(ccode))
+    : (country = "都市が見つかりませんでした");
 
   return (
     <>
@@ -19,6 +22,7 @@ export default function LocationInfo(props) {
           <span className="text-base text-teal-500 font-normal">{country}</span>
         </h2>
       </div>
+      {/* <div>/</div> */}
       <div className="flex justify-evenly">
         <div className="flex-initial w-32">
           <Image
@@ -51,7 +55,10 @@ export default function LocationInfo(props) {
             </h3>
           </div>
           <Link
-            className="block bg-teal-500 hover:bg-teal-800 text-white font-bold py-2 px-4 rounded text-center w-24"
+            className={`"
+              ${winfo.name ? "bg-teal-500" : "pointer-events-none bg-gray-300"}
+              block  hover:bg-teal-800 text-white font-bold py-2 px-4 rounded text-center w-24
+            "`}
             href={`/city/${encodeURIComponent(winfo?.name)}`}
           >
             DETAIL

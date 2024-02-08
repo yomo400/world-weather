@@ -1,8 +1,8 @@
 "use client";
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { Marker } from "./component/Marker";
-import { Map } from "./component/Map";
 import Link from "next/link";
+import { MapCity } from "./component/MapCity";
 
 export default function Home() {
   const mapKey = process.env.NEXT_PUBLIC_MAP_KEY;
@@ -75,7 +75,7 @@ export default function Home() {
               </p>
               <div className="max-w-80 h-80">
                 <Wrapper apiKey={mapKey}>
-                  <Map
+                  <MapCity
                     center={position}
                     style={{
                       width: "100%",
@@ -85,7 +85,7 @@ export default function Home() {
                     zoom={10}
                   >
                     <Marker position={position} />
-                  </Map>
+                  </MapCity>
                 </Wrapper>
               </div>
             </div>
