@@ -142,8 +142,8 @@ export default function WorldWeather(props) {
             </Map>
           </Wrapper>
         </div>
-        <div className="mt-6 mb-2 max-w-lg mr-auto">
-          <div className="w-full px-4 py-6 bg-white shadow-lg rounded-2xl">
+        <div className="mt-6 mb-2 max-w-md mr-auto">
+          <div className="w-full px-4 py-4 bg-white shadow-lg rounded-2xl">
             {weatherError ? (
               //   messageCityError
               // ) : addressError ? (
@@ -151,7 +151,7 @@ export default function WorldWeather(props) {
             ) : isLoading ? (
               messageLoading
             ) : weather ? (
-              <LocationInfo info={weather?.data.res} />
+              <LocationInfo info={weather?.data.res} latLng={latLng} />
             ) : (
               messageFirst
             )}
