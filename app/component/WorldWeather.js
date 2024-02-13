@@ -100,7 +100,7 @@ export default function WorldWeather(props) {
   }, [latLng]);
 
   return (
-    <div className=" sm:p-4">
+    <div className="sm:p-4">
       <header className="z-40 w-full bg-white shadow-lg sm:rounded-2xl rounded-b-xl sticky md:top-2">
         <div className="flex mx-auto flex-center">
           <div className="flex flex-wrap items-baseline w-full p-4 lg:max-w-68 sm:ml-0">

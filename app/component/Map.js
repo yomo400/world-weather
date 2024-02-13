@@ -12,6 +12,7 @@ export const Map = ({ children, style, ...options }) => {
         zoom: options.zoom,
         mapTypeId: options.mapTypeId,
         disableDefaultUI: true,
+        draggableCursor: "crosshair",
       };
       setMap(new window.google.maps.Map(ref.current, option));
     }
