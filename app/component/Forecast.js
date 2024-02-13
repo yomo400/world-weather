@@ -4,8 +4,8 @@ import useSWR from "swr";
 import TimeSet from "./TimeSet";
 import WeatherForecast from "./WeatherForecast";
 import { Wrapper } from "@googlemaps/react-wrapper";
-import { Map } from "./Map";
 import { Marker } from "./Marker";
+import { MapCity } from "./MapCity";
 import Link from "next/link";
 import { useReadMessage } from "./MessageContext";
 
@@ -152,7 +152,7 @@ export default function Forecast(props) {
                   </p>
                   <div className="max-w-80 h-80">
                     <Wrapper apiKey={mapKey}>
-                      <Map
+                      <MapCity
                         center={position}
                         style={{
                           width: "100%",
@@ -163,7 +163,7 @@ export default function Forecast(props) {
                         // mapTypeId="hybrid"
                       >
                         <Marker position={position} />
-                      </Map>
+                      </MapCity>
                     </Wrapper>
                   </div>
                 </div>

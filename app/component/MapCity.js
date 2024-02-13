@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-export const Map = ({ children, style, ...options }) => {
+export const MapCity = ({ children, style, ...options }) => {
   const ref = useRef(null);
   const [map, setMap] = useState();
   // console.log(options);
@@ -13,13 +13,8 @@ export const Map = ({ children, style, ...options }) => {
         mapTypeId: options.mapTypeId,
         disableDefaultUI: true,
       };
-      setMap(new window.google.maps.Map(ref.current, option));
+      setMap(new google.maps.Map(ref.current, option));
     }
-    map?.addListener("click", (e) => {
-      let latlng = e.latLng;
-      // let lat = latlng.lat();
-      options.getCoordinates({ lat: latlng.lat(), lng: latlng.lng() });
-    });
   }, [ref, map]);
 
   return (
