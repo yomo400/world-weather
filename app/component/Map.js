@@ -12,9 +12,8 @@ export const Map = ({ children, style, ...options }) => {
         zoom: options.zoom,
         mapTypeId: options.mapTypeId,
         disableDefaultUI: true,
-        draggableCursor: "crosshair",
       };
-      setMap(new google.maps.Map(ref.current, option));
+      setMap(new window.google.maps.Map(ref.current, option));
     }
     map?.addListener("click", (e) => {
       let latlng = e.latLng;
